@@ -1,0 +1,525 @@
+PS C:\Users\user> mongosh
+Current Mongosh Log ID: 6a8eacadf76de878198619fb
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.10.0
+Using MongoDB:          8.3.8
+Using Mongosh:          2.10.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2026-08-25T14:15:03.829+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use people
+switched to db people
+people> db.people.insertOne({name:"Bob", age:32, gender:"Male"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8ead99f76de878198619fc')
+}
+people> db.people.insertOne({name:"Raju", age:45, gender:"Male"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eadb3f76de878198619fd')
+}
+people> show dbs
+admin   40.00 KiB
+config  72.00 KiB
+local   40.00 KiB
+people  40.00 KiB
+people> show collections
+people
+people> db.people.drop()
+true
+people> db.dropDatabase()
+{ ok: 1, dropped: 'people' }
+people> db.person.insertOne({name:"Bob", age:32, gender:"Male"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eae4bf76de878198619fe')
+}
+people> db.person.insertMany([{name:"Zen", age:54, gender:"Male"}, {name:"Catherine", age:34, gender:"Female"}])
+|
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a8eae61f76de878198619ff'),
+    '1': ObjectId('6a8eae61f76de87819861a00')
+  }
+}
+people> combination of both insertOne() & insertMany()
+Uncaught:
+SyntaxError: Missing semicolon. (1:11)
+
+> 1 | combination of both insertOne() & insertMany()
+    |            ^
+  2 |
+
+people> db.samples.find()
+
+people> db.samples.find().pretty()
+
+people> db.samples.find()
+
+people> db.samples.find().pretty()
+
+people> db.samples.find().count()
+0
+people> db.samples.findOne()
+null
+people> db.samples.find().pretty()
+
+people> db.samples.updateOne({_id:ObjectId("YOUR_ID_HERE")},{$set:{phone:248485685}})
+BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+people> db.samples.find().pretty()
+
+people> db.samples.updateOne({_id:ObjectId("68a123456789abcdef123456")},{$set:{phone:248485685}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+people> db.samples.updateMany({gender:"Female"},{$set:{isFemale:true}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+people> db.samples.replaceOne({_id:ObjectId("YOUR_ID_HERE")},{name:"John", age:42})
+BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+people> db.samples.replaceOne({_id:ObjectId("68a123456789abcdef123456")},{name:"John", age:42})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+people> db.person.deleteOne({name:"John"})
+{ acknowledged: true, deletedCount: 0 }
+people> db.person.deleteMany({})
+{ acknowledged: true, deletedCount: 3 }
+people> db.people.drop()
+true
+people> db.people.drop()
+true
+people> db.dropDatabase()
+{ ok: 1, dropped: 'people' }
+people> db.persons.insertOne({name:"Henry", age:26, hobbies:["Sports", "Cooking"]})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eb261f76de87819861a01')
+}
+people> db.persons.insertOne({name:"Henry", age:26, hobbies:["Sports", "Cooking"]})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eb27bf76de87819861a02')
+}
+people> db.persons.insertOne({name:"Manuel", age:31, hobbies:["Cooking", "Reading"]})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eb296f76de87819861a03')
+}
+people> db.persons.insertMany([{name:"Bob",age:29, hobbies:["Hiking", "Yoga"]},{name:"Maria",age:21}, {name:"Samuel", age:34}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a8eb2e1f76de87819861a04'),
+    '1': ObjectId('6a8eb2e1f76de87819861a05'),
+    '2': ObjectId('6a8eb2e1f76de87819861a06')
+  }
+}
+people> db.persons.insert({name:"Phil", age:35})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('6a8eb333f76de87819861a07') }
+}
+people> db.persons.insert([{name:"Kim", age:24},{name:"Hans", age:38}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a8eb34ef76de87819861a08'),
+    '1': ObjectId('6a8eb34ef76de87819861a09')
+  }
+}
+people> db.persons.find().pretty()
+[
+  {
+    _id: ObjectId('6a8eb261f76de87819861a01'),
+    name: 'Henry',
+    age: 26,
+    hobbies: [ 'Sports', 'Cooking' ]
+  },
+  {
+    _id: ObjectId('6a8eb27bf76de87819861a02'),
+    name: 'Henry',
+    age: 26,
+    hobbies: [ 'Sports', 'Cooking' ]
+  },
+  {
+    _id: ObjectId('6a8eb296f76de87819861a03'),
+    name: 'Manuel',
+    age: 31,
+    hobbies: [ 'Cooking', 'Reading' ]
+  },
+  {
+    _id: ObjectId('6a8eb2e1f76de87819861a04'),
+    name: 'Bob',
+    age: 29,
+    hobbies: [ 'Hiking', 'Yoga' ]
+  },
+  { _id: ObjectId('6a8eb2e1f76de87819861a05'), name: 'Maria', age: 21 },
+  { _id: ObjectId('6a8eb2e1f76de87819861a06'), name: 'Samuel', age: 34 },
+  { _id: ObjectId('6a8eb333f76de87819861a07'), name: 'Phil', age: 35 },
+  { _id: ObjectId('6a8eb34ef76de87819861a08'), name: 'Kim', age: 24 },
+  { _id: ObjectId('6a8eb34ef76de87819861a09'), name: 'Hans', age: 38 }
+]
+people> db.hobbies.insertMany([{_id:"sports", name:"Sports"},{_id:"cooking", name:"Cooking"},{_id:"yoga", name:"Yoga"}])
+{
+  acknowledged: true,
+  insertedIds: { '0': 'sports', '1': 'cooking', '2': 'yoga' }
+}
+people> db.hobbies.find().pretty()
+[
+  { _id: 'sports', name: 'Sports' },
+  { _id: 'cooking', name: 'Cooking' },
+  { _id: 'yoga', name: 'Yoga' }
+]
+people> db.hobbies.insertMany([{_id:"reading", name:"Reading"},{_id:"cooking", name:"Cooking"},{_id:"hiking", name:"Hiking"}])
+Uncaught:
+MongoBulkWriteError: E11000 duplicate key error collection: people.hobbies index: _id_ dup key: { _id: "cooking" }
+Result: BulkWriteResult {
+  insertedCount: 1,
+  matchedCount: 0,
+  modifiedCount: 0,
+  deletedCount: 0,
+  upsertedCount: 0,
+  upsertedIds: {},
+  insertedIds: { '0': 'reading' }
+}
+Write Errors: [
+  WriteError {
+    err: {
+      index: 1,
+      code: 11000,
+      errmsg: 'E11000 duplicate key error collection: people.hobbies index: _id_ dup key: { _id: "cooking" }',
+      errInfo: undefined,
+      op: { _id: 'cooking', name: 'Cooking' }
+    }
+  }
+]
+people> db.hobbies.insertMany([{_id:"reading", name:"Reading"},{_id:"cooking", name:"Cooking"},{_id:"hiking", name:"Hiking"}])
+Uncaught:
+MongoBulkWriteError: E11000 duplicate key error collection: people.hobbies index: _id_ dup key: { _id: "reading" }
+Result: BulkWriteResult {
+  insertedCount: 0,
+  matchedCount: 0,
+  modifiedCount: 0,
+  deletedCount: 0,
+  upsertedCount: 0,
+  upsertedIds: {},
+  insertedIds: {}
+}
+Write Errors: [
+  WriteError {
+    err: {
+      index: 0,
+      code: 11000,
+      errmsg: 'E11000 duplicate key error collection: people.hobbies index: _id_ dup key: { _id: "reading" }',
+      errInfo: undefined,
+      op: { _id: 'reading', name: 'Reading' }
+    }
+  }
+]
+people> db.hobbies.find().pretty()
+[
+  { _id: 'sports', name: 'Sports' },
+  { _id: 'cooking', name: 'Cooking' },
+  { _id: 'yoga', name: 'Yoga' },
+  { _id: 'reading', name: 'Reading' }
+]
+people> db.hobbies.insertMany([{_id:"reading", name:"Reading"},{_id:"cooking", name:"Cooking"},{_id:"hiking", name:"Hiking"}], {orderordered: false})
+Uncaught:
+MongoBulkWriteError: E11000 duplicate key error collection: people.hobbies index: _id_ dup key: { _id: "reading" }
+Result: BulkWriteResult {
+  insertedCount: 1,
+  matchedCount: 0,
+  modifiedCount: 0,
+  deletedCount: 0,
+  upsertedCount: 0,
+  upsertedIds: {},
+  insertedIds: { '2': 'hiking' }
+}
+Write Errors: [
+  WriteError {
+    err: {
+      index: 0,
+      code: 11000,
+      errmsg: 'E11000 duplicate key error collection: people.hobbies index: _id_ dup key: { _id: "reading" }',
+      errInfo: undefined,
+      op: { _id: 'reading', name: 'Reading' }
+    }
+  },
+  WriteError {
+    err: {
+      index: 1,
+      code: 11000,
+      errmsg: 'E11000 duplicate key error collection: people.hobbies index: _id_ dup key: { _id: "cooking" }',
+      errInfo: undefined,
+      op: { _id: 'cooking', name: 'Cooking' }
+    }
+  }
+]
+people> db.hobbies.find().pretty()
+[
+  { _id: 'sports', name: 'Sports' },
+  { _id: 'cooking', name: 'Cooking' },
+  { _id: 'yoga', name: 'Yoga' },
+  { _id: 'reading', name: 'Reading' },
+  { _id: 'hiking', name: 'Hiking' }
+]
+people> db.persons.find().pretty()
+[
+  {
+    _id: ObjectId('6a8eb261f76de87819861a01'),
+    name: 'Henry',
+    age: 26,
+    hobbies: [ 'Sports', 'Cooking' ]
+  },
+  {
+    _id: ObjectId('6a8eb27bf76de87819861a02'),
+    name: 'Henry',
+    age: 26,
+    hobbies: [ 'Sports', 'Cooking' ]
+  },
+  {
+    _id: ObjectId('6a8eb296f76de87819861a03'),
+    name: 'Manuel',
+    age: 31,
+    hobbies: [ 'Cooking', 'Reading' ]
+  },
+  {
+    _id: ObjectId('6a8eb2e1f76de87819861a04'),
+    name: 'Bob',
+    age: 29,
+    hobbies: [ 'Hiking', 'Yoga' ]
+  },
+  { _id: ObjectId('6a8eb2e1f76de87819861a05'), name: 'Maria', age: 21 },
+  { _id: ObjectId('6a8eb2e1f76de87819861a06'), name: 'Samuel', age: 34 },
+  { _id: ObjectId('6a8eb333f76de87819861a07'), name: 'Phil', age: 35 },
+  { _id: ObjectId('6a8eb34ef76de87819861a08'), name: 'Kim', age: 24 },
+  { _id: ObjectId('6a8eb34ef76de87819861a09'), name: 'Hans', age: 38 }
+]
+people> db.persons.find().pretty()
+[
+  {
+    _id: ObjectId('6a8eb261f76de87819861a01'),
+    name: 'Henry',
+    age: 26,
+    hobbies: [ 'Sports', 'Cooking' ]
+  },
+  {
+    _id: ObjectId('6a8eb27bf76de87819861a02'),
+    name: 'Henry',
+    age: 26,
+    hobbies: [ 'Sports', 'Cooking' ]
+  },
+  {
+    _id: ObjectId('6a8eb296f76de87819861a03'),
+    name: 'Manuel',
+    age: 31,
+    hobbies: [ 'Cooking', 'Reading' ]
+  },
+  {
+    _id: ObjectId('6a8eb2e1f76de87819861a04'),
+    name: 'Bob',
+    age: 29,
+    hobbies: [ 'Hiking', 'Yoga' ]
+  },
+  { _id: ObjectId('6a8eb2e1f76de87819861a05'), name: 'Maria', age: 21 },
+  { _id: ObjectId('6a8eb2e1f76de87819861a06'), name: 'Samuel', age: 34 },
+  { _id: ObjectId('6a8eb333f76de87819861a07'), name: 'Phil', age: 35 },
+  { _id: ObjectId('6a8eb34ef76de87819861a08'), name: 'Kim', age: 24 },
+  { _id: ObjectId('6a8eb34ef76de87819861a09'), name: 'Hans', age: 38 }
+]
+people> db.persons.insertOne({name:"Alex", age:31}, {writeConcern:{w:1}})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eb5c2f76de87819861a0a')
+}
+people> db.persons.find().pretty()
+[
+  {
+    _id: ObjectId('6a8eb261f76de87819861a01'),
+    name: 'Henry',
+    age: 26,
+    hobbies: [ 'Sports', 'Cooking' ]
+  },
+  {
+    _id: ObjectId('6a8eb27bf76de87819861a02'),
+    name: 'Henry',
+    age: 26,
+    hobbies: [ 'Sports', 'Cooking' ]
+  },
+  {
+    _id: ObjectId('6a8eb296f76de87819861a03'),
+    name: 'Manuel',
+    age: 31,
+    hobbies: [ 'Cooking', 'Reading' ]
+  },
+  {
+    _id: ObjectId('6a8eb2e1f76de87819861a04'),
+    name: 'Bob',
+    age: 29,
+    hobbies: [ 'Hiking', 'Yoga' ]
+  },
+  { _id: ObjectId('6a8eb2e1f76de87819861a05'), name: 'Maria', age: 21 },
+  { _id: ObjectId('6a8eb2e1f76de87819861a06'), name: 'Samuel', age: 34 },
+  { _id: ObjectId('6a8eb333f76de87819861a07'), name: 'Phil', age: 35 },
+  { _id: ObjectId('6a8eb34ef76de87819861a08'), name: 'Kim', age: 24 },
+  { _id: ObjectId('6a8eb34ef76de87819861a09'), name: 'Hans', age: 38 },
+  { _id: ObjectId('6a8eb5c2f76de87819861a0a'), name: 'Alex', age: 31 }
+]
+people> db.persons.insertOne({name:"Michael", age:51}, {writeConcern:{w:1, j:false}})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eb5e6f76de87819861a0b')
+}
+people> db.persons.insertOne({name:"Michaela", age:25}, {writeConcern:{w:1, j:true}})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eb5f9f76de87819861a0c')
+}
+people> db.persons.insertOne({name:"Aliya", age:23}, {writeConcern:{w:1, j:true, wtimeout:200}})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eb611f76de87819861a0d')
+}
+people> db.persons.insertOne({name:"Aliya", age:23}, {w:1, j:true, wtimeout:200})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6a8eb623f76de87819861a0e')
+}
+people> mongoimport E:\Bigdata\MongoDB\data\tv-shows.json --db movie --collection movies --drop --jsonArray
+Uncaught:
+SyntaxError: Missing semicolon. (1:11)
+
+> 1 | mongoimport E:\Bigdata\MongoDB\data\tv-shows.json --db movie --collection movies --drop --jsonArray
+    |            ^
+  2 |
+
+people>
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+people> exit
+PS C:\Users\user> mongoimport E:\Bigdata\MongoDB\data\tv-shows.json --db movie --collection movies --drop --jsonArray
+mongoimport : The term 'mongoimport' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ mongoimport E:\Bigdata\MongoDB\data\tv-shows.json --db movie --collec ...
++ ~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (mongoimport:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\user> use people
+use : The term 'use' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of
+the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ use people
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (use:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\user> mongo sh
+mongo : The term 'mongo' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling
+of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ mongo sh
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (mongo:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\user> mongosh
+Current Mongosh Log ID: 6a8eb6f3b117d5df5884c351
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.10.0
+Using MongoDB:          8.3.8
+Using Mongosh:          2.10.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2026-08-25T14:15:03.829+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use people
+switched to db people
+people> exit
+PS C:\Users\user> mongoimport "C:\Users\user\Downloads\tv-shows.json" --db movie --collection movies --drop --jsonArray
+mongoimport : The term 'mongoimport' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ mongoimport "C:\Users\user\Downloads\tv-shows.json" --db movie --coll ...
++ ~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (mongoimport:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\user>  "C:\Users\user\Downloads\tv-shows.json" --db movie --collection movies --drop --jsonArray
+At line:1 char:44
++  "C:\Users\user\Downloads\tv-shows.json" --db movie --collection movi ...
++                                            ~~
+Unexpected token 'db' in expression or statement.
+At line:1 char:2
++  "C:\Users\user\Downloads\tv-shows.json" --db movie --collection movi ...
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The '--' operator works only on variables or on properties.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+
+PS C:\Users\user> C:\Users\user\Downloads\tv-shows (1).json
+C:\Users\user\Downloads\tv-shows : The term 'C:\Users\user\Downloads\tv-shows' is not recognized as the name of a cmdlet, function,
+script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and
+try again.
+At line:1 char:1
++ C:\Users\user\Downloads\tv-shows (1).json
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\user\Downloads\tv-shows:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\user> mongoimport "C:\Users\user\Documents\tv-shows.json" --db movie --collection movies --drop --jsonArray
+mongoimport : The term 'mongoimport' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ mongoimport "C:\Users\user\Documents\tv-shows.json" --db movie --coll ...
++ ~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (mongoimport:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\user> Documents\tv-shows.json" --db movie --collection movies --drop --jsonArray
+>>
+>>
+>> exit
+>> ;
+>> ^C
+PS C:\Users\user> mongoimport "C:\Users\user\ Documents\tv-shows.json" --db movie --collection movies --drop --jsonArray
+mongoimport : The term 'mongoimport' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ mongoimport "C:\Users\user\ Documents\tv-shows.json" --db movie --col ...
++ ~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (mongoimport:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\user>  mongoimport "C:\Users\user\ Documents\tv-shows.json" --db movie --collection movies --drop --jsonArray
+mongoimport : The term 'mongoimport' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:2
++  mongoimport "C:\Users\user\ Documents\tv-shows.json" --db movie --co ...
++  ~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (mongoimport:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
