@@ -1,0 +1,19 @@
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE books (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    author VARCHAR(200),
+    description TEXT
+);
+TRUNCATE TABLE books RESTART IDENTITY;
+INSERT INTO books (title, author, description) VALUES
+('The Martian', 'Andy Weir', 'A stranded astronaut struggles to survive on Mars.'),
+('Dune', 'Frank Herbert', 'A science-fiction story involving planets, politics and survival.'),
+('Pride and Prejudice', 'Jane Austen', 'A classic story of relationships, family and society.'),
+('The Hobbit', 'J.R.R. Tolkien', 'A fantasy adventure involving a journey, creatures and a dangerous quest.'),
+('Foundation', 'Isaac Asimov', 'A science-fiction story about humanity and the future of civilization.');
+ 
+SELECT * FROM books;
+
+ALTER TABLE books ADD COLUMN embedding VECTOR(3);
